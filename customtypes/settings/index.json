@@ -1,16 +1,48 @@
 {
-  "id": "defaultpagetype",
-  "label": "defaultPageType",
+  "id": "settings",
+  "label": "Settings",
   "format": "page",
-  "repeatable": true,
+  "repeatable": false,
   "status": true,
   "json": {
     "Main": {
-      "uid": {
+      "site_title": {
+        "type": "Text",
         "config": {
-          "label": "UID"
-        },
-        "type": "UID"
+          "label": "Site TItle",
+          "placeholder": ""
+        }
+      },
+      "og_image": {
+        "type": "Image",
+        "config": {
+          "label": "OG image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "navigation": {
+        "type": "Group",
+        "config": {
+          "label": "Navigation",
+          "fields": {
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "placeholder": "",
+                "select": null
+              }
+            },
+            "label": {
+              "type": "Text",
+              "config": {
+                "label": "Label",
+                "placeholder": ""
+              }
+            }
+          }
+        }
       },
       "slices": {
         "type": "Slices",

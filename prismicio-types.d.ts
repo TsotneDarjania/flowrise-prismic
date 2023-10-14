@@ -4,50 +4,108 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type DefaultpagetypeDocumentDataSlicesSlice = never;
+/**
+ * Item in *Settings → Navigation*
+ */
+export interface SettingsDocumentDataNavigationItem {
+  /**
+   * Link field in *Settings → Navigation*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.navigation[].link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  link: prismic.LinkField;
+
+  /**
+   * Label field in *Settings → Navigation*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.navigation[].label
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  label: prismic.KeyTextField;
+}
+
+type SettingsDocumentDataSlicesSlice = never;
 
 /**
- * Content for defaultPageType documents
+ * Content for Settings documents
  */
-interface DefaultpagetypeDocumentData {
+interface SettingsDocumentData {
   /**
-   * Slice Zone field in *defaultPageType*
+   * Site TItle field in *Settings*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.site_title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  site_title: prismic.KeyTextField;
+
+  /**
+   * OG image field in *Settings*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.og_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Navigation field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.navigation[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  navigation: prismic.GroupField<Simplify<SettingsDocumentDataNavigationItem>>;
+
+  /**
+   * Slice Zone field in *Settings*
    *
    * - **Field Type**: Slice Zone
    * - **Placeholder**: *None*
-   * - **API ID Path**: defaultpagetype.slices[]
+   * - **API ID Path**: settings.slices[]
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#slices
    */
-  slices: prismic.SliceZone<DefaultpagetypeDocumentDataSlicesSlice>
+  slices: prismic.SliceZone<SettingsDocumentDataSlicesSlice>
   /**
-   * Meta Description field in *defaultPageType*
+   * Meta Description field in *Settings*
    *
    * - **Field Type**: Text
    * - **Placeholder**: A brief summary of the page
-   * - **API ID Path**: defaultpagetype.meta_description
+   * - **API ID Path**: settings.meta_description
    * - **Tab**: SEO & Metadata
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */;
   meta_description: prismic.KeyTextField;
 
   /**
-   * Meta Image field in *defaultPageType*
+   * Meta Image field in *Settings*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: defaultpagetype.meta_image
+   * - **API ID Path**: settings.meta_image
    * - **Tab**: SEO & Metadata
    * - **Documentation**: https://prismic.io/docs/field#image
    */
   meta_image: prismic.ImageField<never>;
 
   /**
-   * Meta Title field in *defaultPageType*
+   * Meta Title field in *Settings*
    *
    * - **Field Type**: Text
    * - **Placeholder**: A title of the page used for social media and search engines
-   * - **API ID Path**: defaultpagetype.meta_title
+   * - **API ID Path**: settings.meta_title
    * - **Tab**: SEO & Metadata
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
@@ -55,22 +113,22 @@ interface DefaultpagetypeDocumentData {
 }
 
 /**
- * defaultPageType document from Prismic
+ * Settings document from Prismic
  *
- * - **API ID**: `defaultpagetype`
- * - **Repeatable**: `true`
+ * - **API ID**: `settings`
+ * - **Repeatable**: `false`
  * - **Documentation**: https://prismic.io/docs/custom-types
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type DefaultpagetypeDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
-    Simplify<DefaultpagetypeDocumentData>,
-    "defaultpagetype",
+export type SettingsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<SettingsDocumentData>,
+    "settings",
     Lang
   >;
 
-export type AllDocumentTypes = DefaultpagetypeDocument;
+export type AllDocumentTypes = SettingsDocument;
 
 declare module "@prismicio/client" {
   interface CreateClient {
@@ -82,9 +140,10 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
-      DefaultpagetypeDocument,
-      DefaultpagetypeDocumentData,
-      DefaultpagetypeDocumentDataSlicesSlice,
+      SettingsDocument,
+      SettingsDocumentData,
+      SettingsDocumentDataNavigationItem,
+      SettingsDocumentDataSlicesSlice,
       AllDocumentTypes,
     };
   }
