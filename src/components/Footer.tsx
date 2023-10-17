@@ -2,6 +2,8 @@ import React from "react";
 import { createClient } from "@/prismicio";
 import Link from "next/link";
 import { PrismicNextLink } from "@prismicio/next";
+import Logo from "@/components/Logo";
+import Bounded from "./Bounded";
 
 const Footer = async () => {
   const client = createClient();
@@ -9,8 +11,10 @@ const Footer = async () => {
   const settings = await client.getSingle("settings");
 
   return (
-    <footer>
-      <Link href={"/"}>{settings.data.site_title}</Link>
+    <Bounded as="footer">
+      <Link href={"/"}>
+        <Logo />
+      </Link>
 
       <p>© {new Date().getFullYear()} </p>
 
@@ -21,7 +25,7 @@ const Footer = async () => {
           </li>
         ))}
       </ul>
-    </footer>
+    </Bounded>
   );
 };
 
